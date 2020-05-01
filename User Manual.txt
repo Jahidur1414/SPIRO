@@ -1,0 +1,51 @@
+*************** Author ****************
+
+Name : Jahidur Rahman Fahim
+Email : jahidourrahman152@gmail.com
+
+***************************************
+
+
+# Use Anaconda Command Prompt
+# After open Anaconda Command Prompt change the derectory and set the derectory into the project file
+
+
+
+
+( 1 )***** Pip *******
+# TensorFlow CPU ( if you have low gpu use it )
+pip install -r requirements.txt
+
+# TensorFlow GPU
+pip install -r requirements-gpu.txt
+
+( 2 )**** Downloading official pretrained weights ( if you already have it don't run this command ) ****
+# yolov3
+wget https://pjreddie.com/media/files/yolov3.weights -O weights/yolov3.weights
+
+# yolov3-tiny
+wget https://pjreddie.com/media/files/yolov3-tiny.weights -O weights/yolov3-tiny.weights
+
+( 3 )**** Saving your yolov3 weights as a TensorFlow model ****
+# yolov3 ( if you use the full version of yolo weight then use this command )
+python load_weights.py
+
+# yolov3-tiny
+python load_weights.py --weights ./weights/yolov3-tiny.weights --output ./weights/yolov3-tiny.tf --tiny
+
+# yolov3-custom (add --tiny flag if your custom weights were trained for tiny model)
+python load_weights.py --weights ./weights/<YOUR CUSTOM WEIGHTS FILE> --output ./weights/yolov3-custom.tf --num_classes <# CLASSES>
+
+( 4 )***** Running the Object Tracker *****
+# yolov3 on video
+python object_tracker.py --video ./data/video/test.mp4 --output ./data/video/results.avi
+
+#yolov3 on webcam 
+python object_tracker.py --video 0 --output ./data/video/results.avi
+
+#yolov3-tiny 
+python object_tracker.py --video ./data/video/test.mp4 --output ./data/video/results.avi --weights ./weights/yolov3-tiny.tf --tiny
+
+#yolov3-custom (add --tiny flag if your custom weights were trained for tiny model)
+python object_tracker.py --video ./data/video/test.mp4 --output ./data/video/results.avi --weights ./weights/yolov3-custom.tf --num_classes <# CLASSES> --classes ./data/labels/<YOUR CUSTOM .names FILE>
+
