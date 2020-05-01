@@ -19,12 +19,9 @@ pip install -r requirements.txt
 # TensorFlow GPU
 pip install -r requirements-gpu.txt
 
-( 2 )**** Downloading official pretrained weights ( if you already have it don't run this command ) ****
-# yolov3
-wget https://pjreddie.com/media/files/yolov3.weights -O weights/yolov3.weights
+( 2 )**** Create your own pretrained weights ( if you already have it don't run this command ) ****
 
-# yolov3-tiny
-wget https://pjreddie.com/media/files/yolov3-tiny.weights -O weights/yolov3-tiny.weights
+https://www.youtube.com/watch?v=_4A9inxGqRM&t=1s
 
 ( 3 )**** Saving your yolov3 weights as a TensorFlow model ****
 # yolov3 ( if you use the full version of yolo weight then use this command )
