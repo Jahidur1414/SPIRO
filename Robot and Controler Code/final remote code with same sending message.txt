@@ -1,0 +1,75 @@
+#include <SPI.h>
+#include <nRF24L01.h>
+#include <RF24.h>
+#define sw 3
+#define screenWidth 600
+#define screenHeight 300
+
+RF24 radio(7, 8);
+
+const byte address[6] = "00001";
+
+void setup() {
+  // initialize serial communication at 9600 bits per second:
+  radio.begin();
+  radio.openWritingPipe(address);
+  radio.setPALevel(RF24_PA_MAX);
+  radio.setDataRate(RF24_250KBPS);
+  radio.stopListening();
+  Serial.begin(9600);
+  pinMode(sw, INPUT_PULLUP); // setting pin sw as input
+  pinMode(13, OUTPUT);
+}
+
+void loop() {
+  const char text[] = "ttc";
+  int x = analogRead(A0);// read analog
+  int y = analogRead(A1);
+  int xPos = map(x, 0, 1023, 0, screenWidth);
+  int yPos = map(y, 0, 1023, 0, screenHeight);
+  int sStat = digitalRead(sw);//
+
+  Serial.print("X: ");
+  Serial.print(xPos);
+
+  Serial.print(" Y: ");
+  Serial.println(yPos);// prints y
+
+  if (xPos == 0 && yPos <= 300)
+  {
+    Serial.println("Forword");
+    radio.write(&text, sizeof(text));
+    delay(200);
+    Serial.println("Send");
+  }
+  else if (xPos <= 300 && yPos == 0)
+  {
+    Serial.println("Left");
+    radio.write(&text, sizeof(text));
+    delay(200);
+    Serial.println("Send");
+  }
+  else if (xPos <= 300 && yPos == 300)
+  {
+    Serial.println("Right");
+    radio.write(&text, sizeof(text));
+    delay(200);
+    Serial.println("Send");
+  }
+  else if (xPos == 600 && yPos <= 300)
+  {
+    Serial.println("Backword");
+    radio.write(&text, sizeof(text));
+    delay(200);
+    Serial.println("Send");
+  }
+  if (sStat == LOW) {
+    Serial.println("Switch pressed");
+    radio.write(&text, sizeof(text));
+    delay(200);
+    Serial.println("Send");
+  } else {
+    digitalWrite(13, LOW); // Turn LED OFF
+  }
+  delay(500);
+}

@@ -1,0 +1,368 @@
+#include <Wire.h>
+
+#define SERVOMIN  130 // this is the 'minimum' pulse length count (out of 4096)
+#define SERVOMAX  2600 // this is the 'maximum' pulse length count (out of 4096)
+void setup() {
+  Serial.begin(9600);
+}
+
+int m = 1;
+void loop() {
+  delay(10500);
+
+
+  if (m == 1)
+  {
+    // Part -- > A
+    Serial.print("#"); // for A part (A1A) motor
+    Serial.print(1);
+    Serial.print("P");
+    Serial.print(pls(90));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for A part (A2A) motor
+    Serial.print(4);
+    Serial.print("P");
+    Serial.print(pls(90));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for A part (A3A) motor
+    Serial.print(7);
+    Serial.print("P");
+    Serial.print(pls(90));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for B part (B1A) motor
+    Serial.print(32);
+    Serial.print("P");
+    Serial.print(pls(95));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for B part (B2A) motor
+    Serial.print(29);
+    Serial.print("P");
+    Serial.print(pls(90));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for B part (B3A) motor
+    Serial.print(26);
+    Serial.print("P");
+    Serial.print(pls(90));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    
+    Serial.print("#"); // for A part (A1B) motor
+    Serial.print(2);
+    Serial.print("P");
+    Serial.print(pls(170));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for A part (A2B) motor
+    Serial.print(5);
+    Serial.print("P");
+    Serial.print(pls(10));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for A part (A3B) motor
+    Serial.print(8);
+    Serial.print("P");
+    Serial.print(pls(10));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for B part (B1B) motor
+    Serial.print(31);
+    Serial.print("P");
+    Serial.print(pls(10));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for B part (B2B) motor
+    Serial.print(28);
+    Serial.print("P");
+    Serial.print(pls(170));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for B part (B3B) motor
+    Serial.print(25);
+    Serial.print("P");
+    Serial.print(pls(170));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for A part (A1C) motor
+    Serial.print(3);
+    Serial.print("P");
+    Serial.print(pls(50));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for A part (A2C) motor
+    Serial.print(6);
+    Serial.print("P");
+    Serial.print(pls(160));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for A part (A3C) motor
+    Serial.print(9);
+    Serial.print("P");
+    Serial.print(pls(160));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for B part (B1C) motor
+    Serial.print(30);
+    Serial.print("P");
+    Serial.print(pls(160));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for B part (B2C) motor
+    Serial.print(27);
+    Serial.print("P");
+    Serial.print(pls(10));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for B part (B3C) motor
+    Serial.print(24);
+    Serial.print("P");
+    Serial.print(pls(35));
+    Serial.print("T");
+    Serial.println(900);
+    delay(5000);
+    m = m + 1;
+  }
+
+  if (m == 2)
+  {
+    Serial.print("#"); // for A part (A1B) motor
+    Serial.print(2);
+    Serial.print("P");
+    Serial.print(pls(150));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for A part (A2B) motor
+    Serial.print(5);
+    Serial.print("P");
+    Serial.print(pls(50));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for A part (A3B) motor
+    Serial.print(8);
+    Serial.print("P");
+    Serial.print(pls(50));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for B part (B1B) motor
+    Serial.print(31);
+    Serial.print("P");
+    Serial.print(pls(45));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for B part (B2B) motor
+    Serial.print(28);
+    Serial.print("P");
+    Serial.print(pls(150));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for B part (B3B) motor
+    Serial.print(25);
+    Serial.print("P");
+    Serial.print(pls(150));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for A part (A1C) motor
+    Serial.print(3);
+    Serial.print("P");
+    Serial.print(pls(150));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for A part (A2C) motor
+    Serial.print(6);
+    Serial.print("P");
+    Serial.print(pls(60));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for A part (A3C) motor
+    Serial.print(9);
+    Serial.print("P");
+    Serial.print(pls(60));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for B part (B1C) motor
+    Serial.print(30);
+    Serial.print("P");
+    Serial.print(pls(55));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for B part (B2C) motor
+    Serial.print(27);
+    Serial.print("P");
+    Serial.print(pls(120));
+    Serial.print("T");
+    Serial.println(900);
+    delay(200);
+
+    Serial.print("#"); // for B part (B3C) motor
+    Serial.print(24);
+    Serial.print("P");
+    Serial.print(pls(140));
+    Serial.print("T");
+    Serial.println(900);
+    delay(5000);
+    m = m + 1;
+  }
+  //Down............ and last step sor stend-up
+
+  if (m == 3 )
+  {
+    Serial.print("#"); // for A part (A1C) motor
+    Serial.print(3);
+    Serial.print("P");
+    Serial.print(pls(120));
+    Serial.print("T");
+    Serial.println(900);
+    delay(100);
+    
+    Serial.print("#"); // for A part (A1B) motor
+    Serial.print(2);
+    Serial.print("P");
+    Serial.print(pls(80));
+    Serial.print("T");
+    Serial.println(900);
+    delay(100);
+
+    Serial.print("#"); // for A part (A2C) motor
+    Serial.print(6);
+    Serial.print("P");
+    Serial.print(pls(85));
+    Serial.print("T");
+    Serial.println(900);
+    delay(100);
+    
+    Serial.print("#"); // for A part (A2B) motor
+    Serial.print(5);
+    Serial.print("P");
+    Serial.print(pls(125));
+    Serial.print("T");
+    Serial.println(900);
+    delay(100);
+
+    Serial.print("#"); // for A part (A3C) motor
+    Serial.print(9);
+    Serial.print("P");
+    Serial.print(pls(90));
+    Serial.print("T");
+    Serial.println(900);
+    delay(100);
+    Serial.print("#"); // for A part (A3B) motor
+    Serial.print(8);
+    Serial.print("P");
+    Serial.print(pls(125));
+    Serial.print("T");
+    Serial.println(900);
+    delay(100);
+
+    Serial.print("#"); // for B part (B1C) motor
+    Serial.print(30);
+    Serial.print("P");
+    Serial.print(pls(85));
+    Serial.print("T");
+    Serial.println(900);
+    delay(100);
+    
+    Serial.print("#"); // for B part (B1B) motor
+    Serial.print(31);
+    Serial.print("P");
+    Serial.print(pls(110));
+    Serial.print("T");
+    Serial.println(900);
+    delay(100);
+
+    Serial.print("#"); // for B part (B2C) motor
+    Serial.print(27);
+    Serial.print("P");
+    Serial.print(pls(90));
+    Serial.print("T");
+    Serial.println(900);
+    delay(100);
+    
+    Serial.print("#"); // for B part (B2B) motor
+    Serial.print(28);
+    Serial.print("P");
+    Serial.print(pls(70));
+    Serial.print("T");
+    Serial.println(900);
+    delay(100);
+
+    Serial.print("#"); // for B part (B3C) motor
+    Serial.print(24);
+    Serial.print("P");
+    Serial.print(pls(110));
+    Serial.print("T");
+    Serial.println(900);
+    delay(100);
+    
+    Serial.print("#"); // for B part (B3B) motor
+    Serial.print(25);
+    Serial.print("P");
+    Serial.print(pls(85));
+    Serial.print("T");
+    Serial.println(900);
+    delay(100);
+
+  }
+}
+
+int pls(int ang) {
+  int pulse = map(ang, 0, 180, SERVOMIN, SERVOMAX); // map angle of 0 to 180 to Servo min and Servo max
+  return pulse;
+}

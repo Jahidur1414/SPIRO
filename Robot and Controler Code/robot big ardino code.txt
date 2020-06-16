@@ -1,0 +1,22 @@
+char mystr[10];
+const int LED=4;
+void setup() {
+  // Begin the Serial at 9600 Baud
+  Serial.begin(9600);
+}
+
+void loop() {
+  Serial.readBytes(mystr, 3); //Read the serial data and store in var
+  Serial.println(mystr); //Print data on Serial Monitor
+  delay(100);
+
+  String Data = String(mystr);
+  if (Data == "24")
+  {
+    Serial.println("Ha Ha Ha...........................................");
+    digitalWrite(LED, HIGH);
+    delay(200);
+    digitalWrite(LED, LOW);
+    delay(200);
+  }
+}
