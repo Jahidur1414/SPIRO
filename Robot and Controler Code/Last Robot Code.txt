@@ -1,0 +1,355 @@
+#include <Wire.h>
+#include <SPI.h>
+#include <nRF24L01.h>
+#include <RF24.h>
+#include <Wire.h>
+#include <Adafruit_PWMServoDriver.h>
+
+Adafruit_PWMServoDriver pwm1 = Adafruit_PWMServoDriver(0x40);
+Adafruit_PWMServoDriver pwm2 = Adafruit_PWMServoDriver(0x41);
+
+#define SERVOMIN  125 // this is the 'minimum' pulse length count (out of 4096)
+#define SERVOMAX  575 // this is the 'maximum' pulse length count (out of 4096)
+
+RF24 radio(7, 8);
+
+const byte address[6] = "00001";
+
+void setup() {
+  // put your setup code here, to run once
+  Serial.begin(9600);
+  radio.begin();
+  radio.openReadingPipe(0, address);
+  radio.setPALevel(RF24_PA_MAX);
+  radio.setDataRate(RF24_250KBPS);
+  radio.startListening();
+  pwm1.begin();
+  pwm1.setPWMFreq(60);  // This is the maximum PWM frequency
+
+  pwm2.begin();
+  pwm2.setPWMFreq(60);  // This is the maximum PWM frequency
+}
+
+void loop() {
+  char text[32] = "";
+
+  if (radio.available()) {
+    radio.read(&text, sizeof(text));
+    String transData = String(text);
+    if (transData == "fw")
+    {
+      Serial.println("Forword");
+      delay(100);
+      forword();
+      delay(200);
+    }
+    else if (transData == "lf")
+    {
+      Serial.println("Left");
+      left();
+      delay(200);
+    }
+    else if (transData == "rh")
+    {
+      Serial.println("Right");
+      right();
+      delay(200);
+    }
+    else if (transData == "bw")
+    {
+      Serial.println("Backword");
+      delay(200);
+    }
+    else if (transData == "stx")
+    {
+      Serial.println("Switch pressed");
+      delay(100);
+    }
+  }
+  else {
+    stable();
+  }
+}
+
+void right(){
+  int i, a, b, c, d, e;
+
+  
+  pwm1.setPWM(1, 0, angleToPulse(160) );//A1
+  pwm2.setPWM(6, 0, angleToPulse(160) );
+  pwm1.setPWM(14, 0, angleToPulse(160) );
+  delay(500);
+
+  a = 90, b = 90, c = 90, d = 90;
+  for (i = 1; i <= 30; i += 2)
+  {
+    pwm2.setPWM(13, 0, angleToPulse(a) );//A2
+    a += 2;
+    pwm1.setPWM(10, 0, angleToPulse(b) );
+    b += 2;
+    pwm2.setPWM(2, 0, angleToPulse(c) );
+    c += 2;
+  }
+  delay(500);
+
+  pwm1.setPWM(2, 0, angleToPulse(60) ); //A1
+  pwm2.setPWM(7, 0, angleToPulse(60) );
+  pwm1.setPWM(13, 0, angleToPulse(60) );
+  delay(500);
+
+  pwm1.setPWM(1, 0, angleToPulse(120) );//A1
+  pwm2.setPWM(6, 0, angleToPulse(120) );
+  pwm1.setPWM(14, 0, angleToPulse(120) );
+  for (i = 120; i >= 90; i -= 2)
+  {
+    pwm1.setPWM(1, 0, angleToPulse(i) );//A1
+    pwm2.setPWM(6, 0, angleToPulse(i) );
+    pwm1.setPWM(14, 0, angleToPulse(i) );
+  }
+  delay(500);
+
+  pwm2.setPWM(14, 0, angleToPulse(160) );//A2
+  pwm1.setPWM(9, 0, angleToPulse(160) );
+  pwm2.setPWM(1, 0, angleToPulse(160) );
+  delay(500);
+
+  pwm2.setPWM(13, 0, angleToPulse(90) );//A2
+  pwm1.setPWM(10, 0, angleToPulse(90) );
+  pwm2.setPWM(2, 0, angleToPulse(90) );
+  delay(500);
+
+  a = 60, b = 60, c = 60;
+  for (i = 1; i <= 30; i += 2)
+  {
+    pwm1.setPWM(2, 0, angleToPulse(a) ); //A1
+    a += 2;
+    pwm2.setPWM(7, 0, angleToPulse(b) );
+    b += 2;
+    pwm1.setPWM(13, 0, angleToPulse(c) );
+    c += 2;
+  }
+  delay(500);
+
+  pwm2.setPWM(14, 0, angleToPulse(120) );//A2
+  pwm1.setPWM(9, 0, angleToPulse(120) );
+  pwm2.setPWM(1, 0, angleToPulse(120) );
+  for (i = 120; i >= 90; i -= 2)
+  {
+    pwm2.setPWM(14, 0, angleToPulse(i) );//A2
+    pwm1.setPWM(9, 0, angleToPulse(i) );
+    pwm2.setPWM(1, 0, angleToPulse (i) );
+  }
+  delay(500);
+}
+void left() {
+  int i, a, b, c, d, e;
+
+  
+  pwm1.setPWM(1, 0, angleToPulse(160) );//A1
+  pwm2.setPWM(6, 0, angleToPulse(160) );
+  pwm1.setPWM(14, 0, angleToPulse(160) );
+  delay(500);
+
+  a = 90, b = 90, c = 90, d = 90;
+  for (i = 1; i <= 30; i += 2)
+  {
+    pwm2.setPWM(13, 0, angleToPulse(a) );//A2
+    a -= 2;
+    pwm1.setPWM(10, 0, angleToPulse(b) );
+    b -= 2;
+    pwm2.setPWM(2, 0, angleToPulse(c) );
+    c -= 2;
+  }
+  delay(500);
+
+  pwm1.setPWM(2, 0, angleToPulse(120) ); //A1
+  pwm2.setPWM(7, 0, angleToPulse(120) );
+  pwm1.setPWM(13, 0, angleToPulse(60) );
+  delay(500);
+
+  pwm1.setPWM(1, 0, angleToPulse(120) );//A1
+  pwm2.setPWM(6, 0, angleToPulse(120) );
+  pwm1.setPWM(14, 0, angleToPulse(120) );
+  for (i = 120; i >= 90; i -= 2)
+  {
+    pwm1.setPWM(1, 0, angleToPulse(i) );//A1
+    pwm2.setPWM(6, 0, angleToPulse(i) );
+    pwm1.setPWM(14, 0, angleToPulse(i) );
+  }
+  delay(500);
+
+  pwm2.setPWM(14, 0, angleToPulse(160) );//A2
+  pwm1.setPWM(9, 0, angleToPulse(160) );
+  pwm2.setPWM(1, 0, angleToPulse(160) );
+  delay(500);
+
+  pwm2.setPWM(13, 0, angleToPulse(90) );//A2
+  pwm1.setPWM(10, 0, angleToPulse(90) );
+  pwm2.setPWM(2, 0, angleToPulse(90) );
+  delay(500);
+
+  a = 120, b = 120, c = 60;
+  for (i = 1; i <= 30; i += 2)
+  {
+    pwm1.setPWM(2, 0, angleToPulse(a) ); //A1
+    a -= 2;
+    pwm2.setPWM(7, 0, angleToPulse(b) );
+    b -= 2;
+    pwm1.setPWM(13, 0, angleToPulse(c) );
+    c += 2;
+  }
+  delay(500);
+
+  pwm2.setPWM(14, 0, angleToPulse(120) );//A2
+  pwm1.setPWM(9, 0, angleToPulse(120) );
+  pwm2.setPWM(1, 0, angleToPulse(120) );
+  for (i = 120; i >= 90; i -= 2)
+  {
+    pwm2.setPWM(14, 0, angleToPulse(i) );//A2
+    pwm1.setPWM(9, 0, angleToPulse(i) );
+    pwm2.setPWM(1, 0, angleToPulse (i) );
+  }
+  delay(500);
+  
+}
+
+void forword()
+{
+  //Need to Update
+  int i, a, b, c, d, e;
+
+
+  pwm1.setPWM(1, 0, angleToPulse(160) );//A1
+  pwm2.setPWM(6, 0, angleToPulse(160) );
+  pwm1.setPWM(14, 0, angleToPulse(160) );
+  pwm1.setPWM(15, 0, angleToPulse(90) );
+  delay(500);
+
+
+  a = 90, b = 90, c = 90, d = 90;
+  for (i = 1; i <= 30; i += 2)
+  {
+    pwm2.setPWM(13, 0, angleToPulse(a) );//A2
+    a -= 2;
+    pwm1.setPWM(10, 0, angleToPulse(b) );
+    b += 2;
+    pwm2.setPWM(2, 0, angleToPulse(c) );
+    c -= 2;
+    pwm2.setPWM(0, 0, angleToPulse(d) );
+    d += 2;
+  }
+  delay(500);
+
+
+  ///--------------------------
+  a = 90, b = 90, c = 90, d = 90;
+  pwm1.setPWM(2, 0, angleToPulse(60) ); //A1
+  pwm2.setPWM(7, 0, angleToPulse(120) );
+  pwm1.setPWM(13, 0, angleToPulse(60) );
+  pwm1.setPWM(0, 0, angleToPulse(120) );
+  delay(500);
+
+  //----------------------------------
+  pwm1.setPWM(1, 0, angleToPulse(120) );//A1
+  pwm2.setPWM(6, 0, angleToPulse(120) );
+  pwm1.setPWM(14, 0, angleToPulse(120) );
+  for (i = 120; i >= 90; i -= 2)
+  {
+    pwm1.setPWM(1, 0, angleToPulse(i) );//A1
+    pwm2.setPWM(6, 0, angleToPulse(i) );
+    pwm1.setPWM(14, 0, angleToPulse(i) );
+  }
+  delay(500);
+
+  pwm2.setPWM(14, 0, angleToPulse(160) );//A2
+  pwm1.setPWM(9, 0, angleToPulse(160) );
+  pwm2.setPWM(1, 0, angleToPulse(160) );
+  delay(500);
+
+  a = 60, b = 120, c = 60, d = 120;
+  pwm2.setPWM(13, 0, angleToPulse(90) );//A2
+  pwm1.setPWM(10, 0, angleToPulse(90) );
+  pwm2.setPWM(2, 0, angleToPulse(90) );
+  pwm2.setPWM(0, 0, angleToPulse(90) );
+  delay(500);
+
+  a = 60, b = 120, c = 60, d = 120, e = 90;
+  for (i = 1; i <= 30; i += 2)
+  {
+    pwm1.setPWM(2, 0, angleToPulse(a) ); //A1
+    a += 2;
+    pwm2.setPWM(7, 0, angleToPulse(b) );
+    b -= 2;
+    pwm1.setPWM(13, 0, angleToPulse(c) );
+    c += 2;
+    pwm1.setPWM(0, 0, angleToPulse(d) );
+    d -= 2;
+    pwm1.setPWM(15, 0, angleToPulse(e) );
+    e += 2;
+  }
+  delay(500);
+
+  //-------------------------------------
+  pwm2.setPWM(14, 0, angleToPulse(120) );//A2
+  pwm1.setPWM(9, 0, angleToPulse(120) );
+  pwm2.setPWM(1, 0, angleToPulse(120) );
+  for (i = 120; i >= 90; i -= 2)
+  {
+    pwm2.setPWM(14, 0, angleToPulse(i) );//A2
+    pwm1.setPWM(9, 0, angleToPulse(i) );
+    pwm2.setPWM(1, 0, angleToPulse (i) );
+  }
+  delay(500);
+
+}
+void stable()
+{
+  //Need to Update
+  //---- A1------ PWM-1
+  pwm1.setPWM(0, 0, angleToPulse(90) );
+  pwm1.setPWM(1, 0, angleToPulse(90) );
+  pwm1.setPWM(2, 0, angleToPulse(90) );
+
+  //----- A2 ------ PWM-2
+  pwm2.setPWM(15, 0, angleToPulse(90) );
+  pwm2.setPWM(14, 0, angleToPulse(90) );
+  pwm2.setPWM(13, 0, angleToPulse(90) );
+
+  //---- B1 ------ PWM-1
+  pwm1.setPWM(8, 0, angleToPulse(90) );
+  pwm1.setPWM(9, 0, angleToPulse(90) );
+  pwm1.setPWM(10, 0, angleToPulse(90) );
+
+  //----- B2 ------ PWM-2
+  pwm2.setPWM(5, 0, angleToPulse(90) );
+  pwm2.setPWM(6, 0, angleToPulse(90) );
+  pwm2.setPWM(7, 0, angleToPulse(90) );
+
+  //----- C1 ------ PWM-1
+  pwm1.setPWM(15, 0, angleToPulse(90) );
+  pwm1.setPWM(14, 0, angleToPulse(90) );
+  pwm1.setPWM(13, 0, angleToPulse(90) );
+
+  //----- C2 ------ PWM-2
+  pwm2.setPWM(0, 0, angleToPulse(90) );
+  pwm2.setPWM(1, 0, angleToPulse(90) );
+  pwm2.setPWM(2, 0, angleToPulse(90) );
+
+  delay(500);
+}
+
+void sitdown()
+{
+  //Need to Update
+}
+/*
+   angleToPulse(int ang)
+   gets angle in degree and returns the pulse width
+   also prints the value on seial monitor
+*/
+int angleToPulse(int ang) {
+  int pulse = map(ang, 0, 180, SERVOMIN, SERVOMAX); // map angle of 0 to 180 to Servo min and Servo max
+  //Serial.print("Angle: "); Serial.print(ang);
+  //Serial.print(" pulse: "); Serial.println(pulse);
+  return pulse;
+}
