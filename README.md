@@ -1,3 +1,9 @@
+![IMG_20210117_151913](https://user-images.githubusercontent.com/39921122/113438900-55cd4880-940b-11eb-90eb-2a2885524f4d.jpg)
+### SPIRO 
+Designed to help rescuers to rescue and search. It's not over yet. But when it is done it can do multiple tasks. Such as it can go to that place where humans don't dare to think to go. SPIRO can send that place's real time video and 3D Environment map using RPLIDAR A2 360° Laser Range Scanner. Also SPIRO can detect more than 80 types of objects including humans with the help of it's AI system. SPIRO also can track any selected human. Also we add multiple sensors in SPIRO body so a rescuer can know multiple information of that disaster environment.
+
+So it will not only rescue an injured person it can reduce the risk of a rescuer life. 
+
 # Object Tracking using YOLOv3, Deep Sort and Tensorflow
 This repository implements YOLOv3 and Deep SORT in order to perfrom real-time object tracking. Yolov3 is an algorithm that uses deep convolutional neural networks to perform object detection. We can feed these object detections into Deep SORT (Simple Online and Realtime Tracking with a Deep Association Metric) in order for a real-time object tracker to be created.
 
@@ -90,8 +96,8 @@ There is a test video uploaded in the data/video folder called test.mp4. If you 
 ![Demo of Object Tracker](data/helpers/demo.gif)
 
 #### Webcam Example
-This is a demo of running the object tracker using the above command for running the object tracker on your webcam.
-![Webcam Demo](data/helpers/webcam_demo.gif)
+This is a demo of running the object tracker using the above command for running the object tracker on Robot webcam.
+![Video](https://user-images.githubusercontent.com/39921122/113450682-2fff6e00-9422-11eb-86a9-25ea72cd7d1c.gif)
 
 ## Command Line Args Reference
 ```
@@ -132,8 +138,3 @@ object_tracker.py:
     (default: 0.5)
     (a float)
 ```
-
-## Acknowledgments
-* [Yolov3 TensorFlow Amazing Implementation](https://github.com/zzh8829/yolov3-tf2)
-* [Deep SORT Repository](https://github.com/nwojke/deep_sort)
-* [Yolo v3 official paper](https://arxiv.org/abs/1804.02767)
